@@ -138,4 +138,14 @@ impl ShoppingList {
         Key::new(key)
 
     }
+
+    pub fn add_recipe_to_list(&mut self, recipe_key: Key<Recipe>, multiplier: f32) {
+        let recipe_id = recipe_key.key.clone();
+        let ingredients = self.recipe(recipe_key).ingredients.clone();
+        for (ingredient_key, amount) in ingredients {
+            self.shopping_list.push(ShoppingListItem::new(Key::new(ingredient_key),
+                                                          Some(Key::new(recipe_id.clone())),
+                                                          amount * multiplier));
+        }
+    }
 }
